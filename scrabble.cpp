@@ -34,14 +34,45 @@ class Scrabble {
             letters['Z'] = 10;
             return letters;
         }
-        int calcScore(std::string word)
+        int calcScore(const std::string &word)
         {
             int wordValue = 0;
-            for (int i = 0; i < word.length(); ++i) {
-                char character = std::toupper(word[i]);
+            for (char i : word) {
+                char character = std::toupper(i);
                 wordValue += getLetters()[character];
             }
             return wordValue;
+        }
+
+        void menu()
+        {
+            std::cout << "------------------------------------------------\n";
+            std::cout << "Menu \n";
+            std::cout << "------------------------------------------------\n";
+            std::cout << "Type w(ord) to enter a word to get the score. \n";
+            std::cout << "Type q(uit) to quit the program \n";
+            std::cout << "------------------------------------------------\n";
+        }
+
+        void gameloop()
+        {
+            while(true) {
+                menu();
+                std::string op;
+                std::cin >> op;
+                if("quit" == op || "q" == op) {
+                    return;
+                } else if("word" == op || "w" == op) {
+                    std::string word;
+                    std::cout << "------------------------------------------------\n";
+                    std::cout << "Please enter your word: " << std::endl;
+                    std::cout << "------------------------------------------------\n";
+                    std::cin >> word;
+                    std::cout << "------------------------------------------------\n";
+                    std::cout << word << " has a score of: " << calcScore(word) << std::endl;
+                    std::cout << "------------------------------------------------\n";
+                }
+            }
         }
 };
 
@@ -49,12 +80,8 @@ class Scrabble {
 
 int main(int argc, char *argv[])
 {
-    Scrabble *scrabbler = new Scrabble();
-    std::string word;
-
-    std::cin >> word;
-
-    std::cout << scrabbler->calcScore(word) << std::endl;
+    auto *scrabbler = new Scrabble();
+    scrabbler->gameloop();
 
     return 0;
 }
